@@ -8,7 +8,7 @@
  */
 
 import { useWalletStore } from '@/lib/store';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Wallet, Network, Loader2 } from 'lucide-react';
 
 export default function WalletOverview() {

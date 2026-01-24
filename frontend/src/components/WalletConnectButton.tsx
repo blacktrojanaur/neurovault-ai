@@ -1,16 +1,15 @@
-/**
- * Wallet Connect Button Component
- * 
- * Future implementation:
- * - RainbowKit wallet connection
- * - Display connected address
- * - Network switching
- */
+"use client";
+import { useWallet } from "@/context/WalletContext";
 
-export default function WalletConnectButton() {
+export default function WalletButton() {
+  const { address, connectWallet } = useWallet();
+
   return (
-    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold">
-      Connect Wallet
+    <button
+      onClick={connectWallet}
+      className="px-4 py-2 bg-purple-600 rounded-lg"
+    >
+      {address ? address.slice(0, 6) + "..." : "Connect Wallet"}
     </button>
-  )
+  );
 }

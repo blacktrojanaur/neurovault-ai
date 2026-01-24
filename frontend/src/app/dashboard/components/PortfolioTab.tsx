@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { api, fetcher } from '@/lib/api';
+import { api, fetcher } from '@/lib/agentapi';
 import { useStore } from '@/lib/store';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Database, TrendingUp, Plus, Trash2, Edit2, Shield, AlertCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';

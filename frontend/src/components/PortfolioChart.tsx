@@ -1,24 +1,14 @@
-"use client";
-import { PieChart, Pie, Tooltip, Cell } from "recharts";
+interface PortfolioChartProps {
+  data: any;
+}
 
-export default function PortfolioChart({ portfolio }: any) {
-  if (!portfolio) return null;
-
-  const data = [
-    { name: "ETH", value: portfolio.ETH },
-    { name: "USD", value: portfolio.USD_estimate },
-  ];
-
-  const colors = ["#a855f7", "#22c55e"];
-
+export default function PortfolioChart({ data }: PortfolioChartProps) {
   return (
-    <PieChart width={300} height={300}>
-      <Pie data={data} dataKey="value" nameKey="name" outerRadius={100}>
-        {data.map((_, i) => (
-          <Cell key={i} fill={colors[i]} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChart>
+    <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
+      <h3 className="text-lg font-bold text-blue-400">📊 Portfolio Chart</h3>
+      <p className="text-gray-500 mt-4">
+        ETH Balance: {data?.portfolio?.ETH || 0}
+      </p>
+    </div>
   );
 }

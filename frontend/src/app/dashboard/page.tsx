@@ -15,7 +15,7 @@ import PortfolioTab from './components/PortfolioTab';
 import AnalysisTab from './components/AnalysisTab';
 import VaultsTab from './components/VaultsTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card } from '@/components/ui/card';
+import { Card } from '@/components/ui/GlassCard';
 import { Toaster } from 'sonner';
 
 export default function Dashboard() {

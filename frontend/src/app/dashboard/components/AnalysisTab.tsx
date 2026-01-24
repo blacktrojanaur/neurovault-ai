@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { api } from '@/lib/api';
-import type { AIAnalysis } from '@/lib/api';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { api } from '@/lib/agentapi';
+import type { AIAnalysis } from '@/lib/agentapi';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { Sparkles, TrendingUp, ArrowRight, Play, FileDown } from 'lucide-react';
 import { formatPercent, formatCurrency } from '@/lib/utils';

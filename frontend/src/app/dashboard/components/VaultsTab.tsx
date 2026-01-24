@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { Sparkles, TrendingUp, RefreshCw, Plus, Clock, Shield, Zap, History, BrainCircuit } from 'lucide-react';
 import { formatPercent, formatCurrency } from '@/lib/utils';

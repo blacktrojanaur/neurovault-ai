@@ -9,7 +9,7 @@ import { Wallet, LogOut, Sparkles, RefreshCw } from 'lucide-react';
 import { shortenAddress } from '@/lib/utils';
 import { toast } from 'sonner';
 import { isMetaMaskAvailable } from '@/lib/wallet';
-import { api } from '@/lib/api';
+import { api } from '@/lib/agentapi';
 import { 
   getTokenBalances, 
   getNetworkInfo, 

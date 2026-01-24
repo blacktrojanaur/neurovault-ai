@@ -1,76 +1,146 @@
 "use client";
 
+import Sidebar from "@/components/layout/sidebar";
+import WalletButton from "@/components/WalletConnectButton";
+import AITimeline from "@/components/AITimeline";
+import { useWallet } from "@/context/WalletContext";
+import { runAI, simulate, deployVault } from "@/services/api";
+import { exportAI } from "@/services/api";
+
 import { useState } from "react";
-import { ethers } from "ethers";
+import { getETHPrice } from "@/services/api";
 
-export default function Home() {
-  const [wallet, setWallet] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+
+
+export default function Page() {
+  const { address } = useWallet();
+  const [data, setData] = useState<any>(null);
+  const [log, setLog] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  
 
-  async function connectWallet() {
-    if (!(window as any).ethereum) {
-      alert("MetaMask not installed");
-      return;
-    }
-
-    const provider = new ethers.BrowserProvider((window as any).ethereum);
-    const accounts = await provider.send("eth_requestAccounts", []);
-    setWallet(accounts[0]);
+  function addLog(msg: string) {
+    setLog((prev) => [...prev, msg]);
   }
 
-  async function runAgent() {
-    if (!wallet) {
-      alert("Connect wallet first");
-      return;
-    }
-
+  async function handleRunAI() {
+    if (!address) return alert("Connect wallet first");
     setLoading(true);
-
-    const res = await fetch("http://127.0.0.1:8000/agent/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        wallet: wallet,
-      }),
-    });
-
-    const data = await res.json();
-    setResult(data);
+    addLog("🤖 Running AI agent...");
+    const res = await runAI(address);
+    setData(res);
+    addLog("✅ AI analysis completed");
     setLoading(false);
   }
 
+  async function handleSimulate() {
+  if (!address) return alert("Connect wallet first");
+  addLog("📊 Running simulation...");
+
+  const res = await simulate(address);
+
+  addLog("✅ Simulation result: " + JSON.stringify(res.simulation));
+  addLog("📈 Summary: " + res.summary);
+}
+
+
+  async function handleDeploy() {
+  if (!data?.strategy) return alert("Run AI first");
+
+  addLog("🏦 Deploying vault...");
+
+  const res = await deployVault(data.strategy);
+
+  addLog("✅ " + res.status);
+  addLog("🔗 Tx Hash: " + res.tx_hash);
+}
+
+  async function handleExport() {
+  if (!address) return alert("Connect wallet first");
+
+  const blob = await exportAI(address);
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "neurovault_result.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  addLog("📁 AI result exported to file");
+}
+
+
   return (
-    <div className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-4xl font-bold text-purple-500">NeuroVault.AI Agent</h1>
-      <p className="text-gray-400 mt-2">Autonomous AI DeFi Portfolio Strategist</p>
+    <div className="flex">
+      <Sidebar />
 
-      {!wallet ? (
-        <button
-          onClick={connectWallet}
-          className="mt-6 px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
-        >
-          Connect MetaMask
-        </button>
-      ) : (
-        <p className="mt-4 text-green-400">Wallet Connected: {wallet}</p>
-      )}
-
-      <button
-        onClick={runAgent}
-        className="mt-6 px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700"
-      >
-        {loading ? "AI Agent Running..." : "Run AI DeFi Agent"}
-      </button>
-
-      {result && (
-        <div className="mt-6 bg-gray-900 p-4 rounded-lg text-sm overflow-auto">
-          <h3 className="text-lg font-semibold">AI Agent Output:</h3>
-          <pre className="mt-2 text-green-400">
-            {JSON.stringify(result, null, 2)}
-          </pre>
+      <main className="flex-1 p-10 bg-gradient-to-br from-black via-purple-900/20 to-black text-white">
+        <div className="flex justify-between mb-6">
+          <h2 className="text-3xl font-bold text-purple-400">
+            NeuroVault AI Dashboard
+          </h2>
+          <WalletButton />
         </div>
-      )}
+
+        {/* Buttons */}
+        <div className="flex gap-4 mb-6 flex-wrap">
+  <button onClick={handleRunAI} className="px-6 py-3 bg-purple-600 rounded-xl hover:bg-purple-700">
+    Run AI Agent
+  </button>
+
+  <button onClick={handleSimulate} className="px-6 py-3 bg-blue-600 rounded-xl hover:bg-blue-700">
+    Simulate
+  </button>
+
+  <button onClick={handleDeploy} className="px-6 py-3 bg-green-600 rounded-xl hover:bg-green-700">
+    Deploy Vault
+  </button>
+
+  {/* ✅ NEW BUTTON */}
+  <button onClick={handleExport} className="px-6 py-3 bg-pink-600 rounded-xl hover:bg-pink-700">
+    Generate Report
+  </button>
+</div>
+
+
+        {loading && <p className="text-purple-400 animate-pulse">AI analyzing...</p>}
+
+        {/* Stats */}
+<div className="grid grid-cols-3 gap-6 mt-6">
+  <div className="bg-black/60 p-6 rounded-xl">
+    ETH Balance: {data?.portfolio?.ETH ?? "-"}
+  </div>
+  <div className="bg-black/60 p-6 rounded-xl">
+    Risk Score: {data?.strategy?.risk_score ?? "-"}
+  </div>
+  <div className="bg-black/60 p-6 rounded-xl">
+    APY: {data?.strategy?.expected_apy ?? "-"}
+  </div>
+</div>
+
+{/* ✅ PASTE HERE */}
+{data?.strategy && (
+  <div className="mt-6 bg-black/50 p-6 rounded-xl border border-purple-500/30">
+    <h3 className="text-purple-400 font-bold mb-3">AI Strategy Allocation</h3>
+    <div className="grid grid-cols-3 gap-4">
+      {Object.entries(data.strategy.allocation).map(([k, v]: any) => (
+        <div key={k} className="bg-black/60 p-3 rounded-lg text-center">
+          <p className="text-gray-400">{k}</p>
+          <p className="text-lg font-bold text-purple-300">{v}%</p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* AI Timeline */}
+<AITimeline logs={log} />
+
+
+        
+      </main>
     </div>
   );
 }

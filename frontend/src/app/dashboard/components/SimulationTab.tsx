@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { api } from '@/lib/api';
-import type { Simulation } from '@/lib/api';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { api } from '@/lib/agentapi';
+import type { Simulation } from '@/lib/agentapi';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { Play, TrendingUp, DollarSign, ArrowRight } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
