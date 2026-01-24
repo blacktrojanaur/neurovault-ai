@@ -71,7 +71,8 @@ export default function PortfolioTab({ wallet, onAnalyze }: PortfolioTabProps) {
   const handleLoadDemo = async () => {
     setIsLoadingDemo(true);
     try {
-      await api.portfolio.demo();
+      const demo = await api.portfolio.loadDemo(wallet);
+
       await mutate();
       toast.success('Demo portfolio loaded!');
     } catch (error) {

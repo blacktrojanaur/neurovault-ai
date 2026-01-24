@@ -9,19 +9,16 @@ export const api = {
   },
 
   portfolio: {
-    // Load portfolio (main)
     loadDemo: async (wallet: string) => {
       const res = await fetch(`/api/portfolio?wallet=${wallet}`);
       return res.json();
     },
 
-    // Refresh portfolio (same as load for now)
     refresh: async (wallet: string) => {
       const res = await fetch(`/api/portfolio?wallet=${wallet}`);
       return res.json();
     },
 
-    // Demo portfolio (mock data fallback)
     demo: async () => {
       return {
         wallet: "demo-wallet",
@@ -35,6 +32,5 @@ export const api = {
   },
 };
 
-// SWR fetcher
 export const fetcher = (url: string) =>
   fetch(url).then((res) => res.json());
