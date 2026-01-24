@@ -1,13 +1,28 @@
-const API_BASE = "http://127.0.0.1:8000";
+export type AIAnalysis = {
+  riskScore: number;
+  strategy: {
+    allocation: Record<string, number>;
+  };
+};
 
-export async function getPortfolio(address: string) {
-  const res = await fetch(`${API_BASE}/portfolio/${address}`);
-  if (!res.ok) throw new Error("Portfolio API failed");
-  return res.json();
-}
+export const api = {
+  analyzePortfolio: async (): Promise<AIAnalysis> => {
+    // TEMP MOCK DATA (later we connect real AI)
+    return {
+      riskScore: 42,
+      strategy: {
+        allocation: {
+          ETH: 40,
+          BTC: 30,
+          DeFi: 20,
+          Stable: 10,
+        },
+      },
+    };
+  },
+};
 
-export async function runAI(address: string) {
-  const res = await fetch(`${API_BASE}/agent/${address}`);
-  if (!res.ok) throw new Error("AI API failed");
+export const fetcher = async (url: string) => {
+  const res = await fetch(url);
   return res.json();
-}
+};

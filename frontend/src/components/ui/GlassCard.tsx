@@ -2,17 +2,13 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import React from "react";
 
-export default function GlassCard({ children }: { children: ReactNode }) {
+
+export default function GlassCard({ children, className = "" }: any) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      whileHover={{ scale: 1.02 }}
-      className="glass p-6 neon"
-    >
+    <div className={`rounded-xl border border-white/10 bg-white/5 p-4 ${className}`}>
       {children}
-    </motion.div>
+    </div>
   );
 }
