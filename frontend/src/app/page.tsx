@@ -1,5 +1,9 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+
 import Sidebar from "@/components/layout/sidebar";
 import WalletButton from "@/components/WalletConnectButton";
 import AITimeline from "@/components/AITimeline";

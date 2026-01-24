@@ -1,28 +1,8 @@
-'use client';
+"use client";
 
-/**
- * App Providers
- * 
- * Wraps the app with necessary providers (Wagmi, QueryClient, RainbowKit, etc.)
- */
+import { WagmiProvider } from "wagmi";
+import { config } from "@/lib/wagmi";
 
-import '@rainbow-me/rainbowkit/styles.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
-import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
-import { config } from '@/lib/wallet';
-import { useState } from 'react';
-
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
-
-  return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={darkTheme()}>
-          {children}
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return <WagmiProvider config={config}>{children}</WagmiProvider>;
 }
