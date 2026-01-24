@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { api } from '@/lib/agentapi';
-import type { AIAnalysis } from '@/lib/agentapi';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { Sparkles, TrendingUp, ArrowRight, Play, FileDown } from 'lucide-react';
@@ -38,17 +37,7 @@ export default function AnalysisTab({ wallet }: AnalysisTabProps) {
     }
   };
 
-  const handleExecute = async () => {
-    setIsExecuting(true);
-    try {
-      await api.ai.execute(wallet, 1);
-      toast.success('Execution request submitted (simulation only)');
-    } catch (error) {
-      toast.error('Failed to execute');
-    } finally {
-      setIsExecuting(false);
-    }
-  };
+  // Removed handleExecute as api.ai.execute does not exist
 
   const handleDownloadReport = () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';

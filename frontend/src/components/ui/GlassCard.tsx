@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-export function Card({ children, className }: any) {
+export default function GlassCard({ children, className }: any) {
   return (
     <div
       className={clsx(
@@ -13,6 +13,19 @@ export function Card({ children, className }: any) {
     </div>
   );
 }
+export  function Card({ children, className }: any) {
+  return (
+    <div
+      className={clsx(
+        "bg-black/60 backdrop-blur-xl border border-purple-500/20 rounded-xl shadow-lg",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
 
 export function CardHeader({ children, className }: any) {
   return (
