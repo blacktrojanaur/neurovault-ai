@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     
-    "build": "next build && next export"},
+    "build": "next build"},
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
