@@ -1,82 +1,27 @@
-// frontend/src/lib/agentapi.ts
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-export type PortfolioAsset = {
-  name: string;
-  amount: number;
-};
+async function request(path: string, body?: any) {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: body ? "POST" : "GET",
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined,
+  });
 
-export type Portfolio = {
-  wallet: string;
-  assets: PortfolioAsset[];
-};
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "API error");
+  }
 
-export type Strategy = {
-  risk_score: string;
-  allocation: Record<string, number>;
-  expected_apy: string;
-};
-
-export type AIAnalysis = {
-  portfolio: {
-    ETH: number;
-    USD: number;
-  };
-  strategy: Strategy;
-  timeline: string[];
-};
-
-export type Simulation = {
-  simulation: Record<string, string>;
-  summary: string;
-};
-
-// simple fetcher (used by SWR sometimes)
-export const fetcher = (url: string) =>
-  fetch(url).then((res) => res.json());
-
-const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+  return res.json();
+}
 
 export const api = {
   ai: {
-    analyze: async (wallet: string): Promise<AIAnalysis> => {
-      const res = await fetch(`${API_BASE}/agent/${wallet}`);
-      return res.json();
-    },
+    analyze: (wallet: string) =>
+      request("/api/ai/analyze", { wallet }),
   },
-
   portfolio: {
-    loadDemo: async (wallet: string): Promise<Portfolio> => {
-      return {
-        wallet,
-        assets: [
-          { name: "ETH", amount: 1.2 },
-          { name: "USDC", amount: 540 },
-          { name: "DeFi Tokens", amount: 300 },
-        ],
-      };
-    },
-
-    refresh: async (wallet: string): Promise<Portfolio> => {
-      const res = await fetch(`${API_BASE}/portfolio/${wallet}`);
-      const data = await res.json();
-      return {
-        wallet,
-        assets: [
-          { name: "ETH", amount: data.ETH },
-          { name: "USD Value", amount: data.USD },
-        ],
-      };
-    },
-
-    demo: async (): Promise<boolean> => {
-      return true;
-    },
-  },
-
-  simulation: {
-    run: async (wallet: string): Promise<Simulation> => {
-      const res = await fetch(`${API_BASE}/simulate/${wallet}`);
-      return res.json();
-    },
+    load: (wallet: string) =>
+      request(`/api/portfolio/${wallet}`),
   },
 };

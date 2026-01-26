@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { api, fetcher } from '@/lib/agentapi';
+import { api, fetcher } from '@/frontend/src/services/api';
 import { useStore } from '@/lib/store';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Database, TrendingUp, Plus, Trash2, Edit2, Shield, AlertCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
@@ -71,8 +71,7 @@ export default function PortfolioTab({ wallet, onAnalyze }: PortfolioTabProps) {
   const handleLoadDemo = async () => {
     setIsLoadingDemo(true);
     try {
-      const demo = await api.portfolio.loadDemo(wallet);
-
+      await api.portfolio.demo();
       await mutate();
       toast.success('Demo portfolio loaded!');
     } catch (error) {
