@@ -21,6 +21,8 @@ def generate_rule_based_recommendations(portfolio_data: dict, risk_level: str = 
     Returns:
         dict: Rebalancing recommendations
     """
+
+    
     # Placeholder for future implementation
     return {
         "recommendations": [],
