@@ -5,7 +5,6 @@ def run_ai_agent(portfolio):
     eth = portfolio["ETH"]
 
     risk = "Low" if eth < 1 else "Medium" if eth < 5 else "High"
-
     strategy = {
         "risk_score": risk,
         "expected_apy": round(5 + eth * 1.2, 2),
