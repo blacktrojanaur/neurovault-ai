@@ -1,6 +1,7 @@
 #!/bin/bash
 # Test NodeOps deployment locally
 
+
 echo "=== AutoDeFi.AI NodeOps Deployment Test ==="
 
 # Build Docker image
