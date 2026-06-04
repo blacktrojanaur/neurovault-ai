@@ -1,16 +1,5 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production';
-
 const nextConfig = {
-  // Static export for GitHub Pages
-  output: 'export',
-
-  // Set basePath to your repo name for GitHub Pages
-  // e.g.  https://blacktrojanaur.github.io/neurovault-ai/
-  basePath: isProd ? '/neurovault-ai' : '',
-  assetPrefix: isProd ? '/neurovault-ai/' : '',
-
-  trailingSlash: true,
   reactStrictMode: true,
 
   // Suppress TS / ESLint errors during build
