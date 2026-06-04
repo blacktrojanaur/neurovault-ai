@@ -6,7 +6,7 @@ import { Bell, TrendingUp, TrendingDown, Activity, AlertCircle } from 'lucide-re
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import useSWR from 'swr';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://neurovault-api-hiny.onrender.com';
 
 interface Alert {
   protocol: string;

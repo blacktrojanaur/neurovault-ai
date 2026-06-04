@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://neurovault-api-hiny.onrender.com";
 
 async function request(path: string, body?: any) {
   const res = await fetch(`${API_URL}${path}`, {

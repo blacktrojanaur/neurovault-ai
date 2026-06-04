@@ -58,7 +58,7 @@ export default function AnalysisTab({ wallet }: AnalysisTabProps) {
   };
 
   const handleDownloadReport = () => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://neurovault-api-hiny.onrender.com';
     window.open(`${apiUrl}/api/report/generate?wallet=${wallet}`, '_blank');
   };
 

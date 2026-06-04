@@ -11,7 +11,8 @@ export default function AIAgent() {
     setResult(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/ai/run");
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://neurovault-api-hiny.onrender.com";
+      const res = await fetch(`${apiUrl}/ai/run`);
       const data = await res.json();
       setResult(data.data);
     } catch (err) {

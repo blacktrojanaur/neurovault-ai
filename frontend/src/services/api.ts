@@ -1,4 +1,4 @@
-const BASE = "http://127.0.0.1:8000";
+const BASE = process.env.NEXT_PUBLIC_API_URL || "https://neurovault-api-hiny.onrender.com";
 
 export async function runAI(address: string) {
   const res = await fetch(`${BASE}/agent/${address}`);
@@ -19,7 +19,6 @@ export async function deployVault(strategy: any) {
   return res.json();
 }
 
-// ✅ ADD THIS FUNCTION (IMPORTANT)
 export async function exportAI(address: string) {
   const res = await fetch(`${BASE}/agent/${address}`);
   const data = await res.json();
@@ -28,7 +27,8 @@ export async function exportAI(address: string) {
     type: "application/json",
   });
 }
- export async function getETHPrice() {
-  const res = await fetch("http://127.0.0.1:8000/price/eth");
+
+export async function getETHPrice() {
+  const res = await fetch(`${BASE}/price/eth`);
   return res.json();
 }

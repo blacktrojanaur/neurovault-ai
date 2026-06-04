@@ -22,7 +22,7 @@ interface PortfolioTabProps {
 
 const COLORS = ['#8b5cf6', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b'];
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://neurovault-api-hiny.onrender.com';
 
 export default function PortfolioTab({ wallet, onAnalyze }: PortfolioTabProps) {
   // Get mode state from store
