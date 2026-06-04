@@ -15,7 +15,7 @@ import argparse
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from agent.reasoning_engine import initialize_agent, analyze_portfolio
+from agent_old.reasoning_engine import initialize_agent, analyze_portfolio
 
 def main():
     parser = argparse.ArgumentParser(description='Run AI agent analysis')

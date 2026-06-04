@@ -1,26 +1,33 @@
-import "./global.css";
-import Sidebar from "@/components/layout/sidebar";
-import Navbar from "@/components/layout/Navbar";
-import { WalletProvider } from "@/context/WalletContext";
+"use client";
 
+import "./global.css";
+import { WalletProvider } from "@/context/WalletContext";
+import { WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { config } from "@/lib/wagmi";
+import { useState } from "react";
+import "@rainbow-me/rainbowkit/styles.css";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <html lang="en">
       <body className="bg-black text-white">
-        <WalletProvider>
-          <div className="flex h-screen">
-            <Sidebar />
-            <div className="flex-1 flex flex-col">
-              <Navbar />
-              <main className="flex-1 overflow-y-auto p-6">{children}</main>
-            </div>
-          </div>
-        </WalletProvider>
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider>
+              <WalletProvider>
+                {children}
+              </WalletProvider>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
       </body>
     </html>
   );

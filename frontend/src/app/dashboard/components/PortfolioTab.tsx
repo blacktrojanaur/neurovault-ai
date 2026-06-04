@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { api, fetcher } from '@/frontend/src/services/api';
+import { api } from '@/lib/agentapi';
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 import { useStore } from '@/lib/store';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Database, TrendingUp, Plus, Trash2, Edit2, Shield, AlertCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
@@ -58,7 +60,7 @@ export default function PortfolioTab({ wallet, onAnalyze }: PortfolioTabProps) {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      await api.portfolio.refresh(wallet);
+      await fetch(`${API_URL}/api/portfolio/refresh/${wallet}`, { method: 'POST' });
       await mutate();
       toast.success('Portfolio refreshed successfully!');
     } catch (error) {
@@ -71,7 +73,7 @@ export default function PortfolioTab({ wallet, onAnalyze }: PortfolioTabProps) {
   const handleLoadDemo = async () => {
     setIsLoadingDemo(true);
     try {
-      await api.portfolio.demo();
+      await fetch(`${API_URL}/api/portfolio/demo`, { method: 'POST' });
       await mutate();
       toast.success('Demo portfolio loaded!');
     } catch (error) {

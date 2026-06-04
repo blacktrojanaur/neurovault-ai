@@ -1,4 +1,4 @@
-from market import get_market_data
+from market_service import get_market_data
 
 def run_ai_agent(portfolio):
     market = get_market_data()
